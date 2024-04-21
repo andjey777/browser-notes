@@ -1,6 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import (
+    redirect,
+    render,
+)
+from django.views import generic
 
 
-def index(request):
-    return HttpResponse("Test")
+class IndexView(generic.View):
+    template_name = "notes/index.html"
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+    def post(self, request):
+        return redirect("notes:index")

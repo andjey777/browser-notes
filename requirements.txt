@@ -2,3 +2,4 @@ django == 5.0.4
 isort == 5.13.2
 black == 24.4.0
 flake8 == 7.0.0
+django-bootstrap5 == 24.1

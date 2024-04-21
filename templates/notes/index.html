@@ -1,0 +1,22 @@
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Browser Notes</title>
+</head>
+
+<body>
+    <form method="post">
+        <p>
+            <label for="txt">Input note:</label><br />
+            <textarea class="form-control" id="txt" placeholder=""></textarea>
+        </p>
+        <a href="{% url 'notes:index' %}" class="btn btn-primary">Save</a>
+    </form>
+</body>
+
+</html>
