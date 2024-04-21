@@ -10,12 +10,10 @@
 </head>
 
 <body>
-    <form method="post">
-        <p>
-            <label for="txt">Input note:</label><br />
-            <textarea class="form-control" id="txt" placeholder=""></textarea>
-        </p>
-        <a href="{% url 'notes:index' %}" class="btn btn-primary">Save</a>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Save</button>
     </form>
 </body>
 
