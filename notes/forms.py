@@ -5,4 +5,9 @@ from notes.models import NotesModel
 
 
 class NotesForm(forms.Form):
-    notes_text = forms.CharField(label="Input note:", widget=forms.TextInput(attrs={"class": "form-control"}))
+    name = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Name"}))
+    notes_text = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Text"}))
+
+    class Meta:
+        model = NotesModel
+        fields = ("name", "text")
