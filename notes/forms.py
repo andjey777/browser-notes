@@ -4,9 +4,10 @@ from django.contrib.auth.forms import UserCreationForm
 from notes.models import NotesModel
 
 
-class NotesForm(forms.Form):
+class NotesForm(forms.ModelForm):
+    # authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
     name = forms.CharField(label="", widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Name"}))
-    notes_text = forms.CharField(
+    text = forms.CharField(
         label="", widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Text"})
     )
 

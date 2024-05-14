@@ -13,12 +13,10 @@ from notes.models import NotesModel
 class IndexView(generic.UpdateView):
     template_name = "notes/index.html"
     success_url = reverse_lazy("notes:index")
-
-    def get_queryset(self):
-        self.queryset = NotesModel.objects.latest("last_modified")
+    queryset = NotesModel.objects.latest("last_modified")
 
     def get(self, request):
-        form = NotesForm
+        form = NotesForm(instance=self.queryset)
         return render(request, self.template_name, {"form": form})
 
     def post(self, request):

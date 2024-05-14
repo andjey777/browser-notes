@@ -10,15 +10,31 @@
 </head>
 
 <body class="m-3">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <h1 style="max-width: 700px; text-align: center; margin:0 auto;">Note</h1>
     <div class="card" style="max-width: 700px; text-align: center; margin:0 auto;">
 
-        <form class="m-3" method="POST">
+        <form id="main_form" class="m-3" method="POST">
             {% csrf_token %}
             {{ form.as_p }}
             <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
+    <script>
+    $(document).ready(function() {
+        setInterval(function SubmitForm() {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'notes:index' %}",
+                data: {
+                    name: $('#id_name').val(),
+                    notes_text: $('#id_notes_text').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+            })
+        }, 50000);
+    })
+    </script>
 </body>
 
 </html>
