@@ -28,11 +28,11 @@
                 url: "{% url 'notes:index' %}",
                 data: {
                     name: $('#id_name').val(),
-                    notes_text: $('#id_notes_text').val(),
+                    text: $('#id_text').val(),
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 },
             })
-        }, 50000);
+        }, 1000);
     })
     </script>
 </body>

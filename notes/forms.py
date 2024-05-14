@@ -7,9 +7,7 @@ from notes.models import NotesModel
 class NotesForm(forms.ModelForm):
     # authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
     name = forms.CharField(label="", widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Name"}))
-    text = forms.CharField(
-        label="", widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Text"})
-    )
+    text = forms.CharField(label="", widget=forms.Textarea(attrs={"class": "form-control", "placeholder": "Text"}))
 
     class Meta:
         model = NotesModel
