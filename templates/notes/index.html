@@ -20,20 +20,39 @@
             <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
+    <!-- <script>
+        $(document).ready(function () {
+            setInterval(function SubmitForm() {
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'notes:index' %}",
+                    data: {
+                        name: $('#id_name').val(),
+                        text: $('#id_text').val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                })
+            }, 10000);
+        })
+    </script> -->
     <script>
-    $(document).ready(function() {
-        setInterval(function SubmitForm() {
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'notes:index' %}",
-                data: {
-                    name: $('#id_name').val(),
-                    text: $('#id_text').val(),
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                },
-            })
-        }, 1000);
-    })
+        var timeout;
+
+        $('#id_text').on('keyup', function () {
+            if (timeout) { clearTimeout(timeout); }
+
+            timeout = setTimeout(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'notes:index' %}",
+                    data: {
+                        name: $('#id_name').val(),
+                        text: $('#id_text').val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                })
+            }, 5000);
+        })
     </script>
 </body>
 
