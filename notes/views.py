@@ -22,8 +22,9 @@ class IndexView(generic.UpdateView):
     def post(self, request):
         form_name = request.POST.get("name")
         form_text = request.POST.get("text")
-        NotesModel.objects.update_or_create(
-            name=form_name,
-            defaults={"text": form_text},
-        )
+        if form_name and form_text:
+            NotesModel.objects.update_or_create(
+                name=form_name,
+                defaults={"text": form_text},
+            )
         return redirect("notes:index")

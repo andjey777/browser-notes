@@ -3,6 +3,8 @@
 {% bootstrap_javascript %}
 <!DOCTYPE html>
 <html>
+<style>
+</style>
 
 <head>
     <meta charset="utf-8">
@@ -16,8 +18,16 @@
 
         <form id="main_form" class="m-3" method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-primary" type="submit">Save</button>
+            <table class="table table-borderless w">
+                <tr>
+                    <td>{{ form.name }}</td>
+                    <td><button class="btn btn-primary" type="submit">Save</button></td>
+                    <td><button class="btn btn-primary" type="submit">TMP</button></td>
+                </tr>
+                <tr>
+                    <td colspan="3">{{ form.text }}</td>
+                </tr>
+            </table>
         </form>
     </div>
     <!-- <script>
