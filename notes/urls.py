@@ -5,4 +5,5 @@ from . import views
 app_name = "notes"
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
+    path("update/<int:notes_id>/", views.UpdateView.as_view(), name="update"),
 ]

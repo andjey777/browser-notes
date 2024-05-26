@@ -1,6 +1,5 @@
-from django.db.models.query import QuerySet
+from django.http import JsonResponse
 from django.shortcuts import (
-    redirect,
     render,
 )
 from django.urls import reverse_lazy
@@ -13,18 +12,17 @@ from notes.models import NotesModel
 class IndexView(generic.UpdateView):
     template_name = "notes/index.html"
     success_url = reverse_lazy("notes:index")
-    queryset = NotesModel.objects.order_by("last_modified").last()
 
     def get(self, request):
-        form = NotesForm(instance=self.queryset)
+        queryset = NotesModel.objects.order_by("last_modified").last()
+        form = NotesForm(instance=queryset)
         return render(request, self.template_name, {"form": form})
 
-    def post(self, request):
+
+class UpdateView(generic.UpdateView):
+
+    def post(self, request, notes_id):
         form_name = request.POST.get("name")
         form_text = request.POST.get("text")
-        if form_name and form_text:
-            NotesModel.objects.update_or_create(
-                name=form_name,
-                defaults={"text": form_text},
-            )
-        return redirect("notes:index")
+        NotesModel.objects.filter(id=notes_id).update(name=form_name, text=form_text)
+        return JsonResponse("data", safe=False)

@@ -33,35 +33,28 @@
         </form>
     </div>
     <script>
+        function SubmitForm() {
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'notes:update' notes_id=form.instance.id %}",
+                data: {
+                    name: $('#id_name').val(),
+                    text: $('#id_text').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+            })
+        }
+    </script>
+    <script>
         $(document).ready(function () {
-            setInterval(function SubmitForm() {
-                $.ajax({
-                    type: 'POST',
-                    url: "{% url 'notes:index' %}",
-                    data: {
-                        name: $('#id_name').val(),
-                        text: $('#id_text').val(),
-                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                    },
-                })
-            }, 60000);
+            setInterval(SubmitForm, 60000);
         })
     </script>
     <script>
         var timeout;
         $('#id_text').on('keyup', function () {
             if (timeout) { clearTimeout(timeout); }
-            timeout = setTimeout(function () {
-                $.ajax({
-                    type: 'POST',
-                    url: "{% url 'notes:index' %}",
-                    data: {
-                        name: $('#id_name').val(),
-                        text: $('#id_text').val(),
-                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                    },
-                })
-            }, 5000);
+            timeout = setTimeout(SubmitForm, 5000);
         })
     </script>
 </body>
