@@ -1,8 +1,5 @@
-from django.core.serializers import serialize
 from django.http import JsonResponse
-from django.shortcuts import (
-    render,
-)
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -26,5 +23,5 @@ class UpdateView(generic.UpdateView):
         form_name = request.POST.get("name")
         form_text = request.POST.get("text")
         NotesModel.objects.filter(id=notes_id).update(name=form_name, text=form_text)
-        data = NotesModel.objects.filter(id=notes_id).values("name","text")
+        data = NotesModel.objects.filter(id=notes_id).values("name", "text")
         return JsonResponse({"name": data[0]["name"], "text": data[0]["text"]})
