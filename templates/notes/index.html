@@ -1,62 +1,49 @@
-{% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-<!DOCTYPE html>
-<html>
-<style>
-</style>
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="utf-8">
-    <title>Browser Notes</title>
-</head>
+{% block content %}
 
-<body class="m-3">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <h1 style="max-width: 700px; text-align: center; margin:0 auto;">Note</h1>
-    <div class="card" style="max-width: 700px; text-align: center; margin:0 auto;">
-
-        <form id="main_form" class="m-3" method="POST">
-            {% csrf_token %}
-            <table class="table table-borderless w">
-                <tr>
-                    <td>{{ form.name }}</td>
-                    <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
-                            style="width:100%">Save</button></td>
-                    <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
-                            style="width:100%">Close</button></td>
-                </tr>
-                <tr>
-                    <td colspan="3">{{ form.text }}</td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <script>
-        function SubmitForm() {
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'notes:update' notes_id=form.instance.id %}",
-                data: {
-                    name: $('#id_name').val(),
-                    text: $('#id_text').val(),
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-                },
-            })
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            setInterval(SubmitForm, 60000);
+<h1 style="max-width: 700px; text-align: center; margin:0 auto;">Note</h1>
+<div class="card" style="max-width: 700px; text-align: center; margin:0 auto;">
+    <form id="main_form" class="m-3" method="POST">
+        {% csrf_token %}
+        <table class="table table-borderless w">
+            <tr>
+                <td>{{ form.name }}</td>
+                <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
+                        style="width:100%">Save</button></td>
+                <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
+                        style="width:100%">Close</button></td>
+            </tr>
+            <tr>
+                <td colspan="3">{{ form.text }}</td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    function SubmitForm() {
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'notes:update' notes_id=form.instance.id %}",
+            data: {
+                name: $('#id_name').val(),
+                text: $('#id_text').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
         })
-    </script>
-    <script>
-        var timeout;
-        $('#id_text').on('keyup', function () {
-            if (timeout) { clearTimeout(timeout); }
-            timeout = setTimeout(SubmitForm, 5000);
-        })
-    </script>
-</body>
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        setInterval(SubmitForm, 60000);
+    })
+</script>
+<script>
+    var timeout;
+    $('#id_text').on('keyup', function () {
+        if (timeout) { clearTimeout(timeout); }
+        timeout = setTimeout(SubmitForm, 5000);
+    })
+</script>
 
-</html>
+{% endblock content %}
