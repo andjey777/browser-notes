@@ -1,89 +1,67 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 20%;">
-      <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-      <span class="fs-4">Sidebar</span>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"></use></svg>
-          Home
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"></use></svg>
-          Dashboard
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"></use></svg>
-          Orders
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"></use></svg>
-          Products
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link link-dark">
-          <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"></use></svg>
-          Customers
-        </a>
-      </li>
-    </ul>
-    <hr>
-  </div>
-  <div>
-<h1 style="max-width: 700px; text-align: center; margin:0 auto;">Note<a href="{% url 'notes:create' %}">+</a></h1>
-<div class="card" style="max-width: 700px; text-align: center; margin:0 auto;">
+<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 20%; position:absolute;">
+  <span class="fs-4">Saved Notes</span>
+  <hr>
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item">
+      <a href="#" class="nav-link active" aria-current="page">
+        <svg class="bi me-2" width="16" height="16">
+          <use xlink:href="#home"></use>
+        </svg>
+        Home
+      </a>
+    </li>
+  </ul>
+  <hr>
+</div>
+
+<div class="container" style="max-width: 700px; text-align: center; margin:0 auto;">
+  <h1>Note<a href="{% url 'notes:create' %}">+</a></h1>
+  <div class="card">
     <form id="main_form" class="m-3" method="POST">
-        {% csrf_token %}
-        <table class="table table-borderless w">
-            <tr>
-                <td>{{ form.name }}</td>
-                <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
-                        style="width:100%">Save</button></td>
-                <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
-                        style="width:100%">Close</button></td>
-            </tr>
-            <tr>
-                <td colspan="3">{{ form.text }}</td>
-            </tr>
-        </table>
+      {% csrf_token %}
+      <table class="table table-borderless w">
+        <tr>
+          <td>{{ form.name }}</td>
+          <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
+              style="width:100%">Save</button></td>
+          <td class="px-1" style="width:10%"><button class="btn btn-primary" type="submit"
+              style="width:100%">Close</button></td>
+        </tr>
+        <tr>
+          <td colspan="3">{{ form.text }}</td>
+        </tr>
+      </table>
     </form>
-</div>
+  </div>
+
 </div>
 <script>
-    function SubmitForm() {
-        $.ajax({
-            type: 'POST',
-            url: "{% url 'notes:update' notes_id=form.instance.id %}",
-            data: {
-                name: $('#id_name').val(),
-                text: $('#id_text').val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-            },
-        })
-    }
+  function SubmitForm() {
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'notes:update' notes_id=form.instance.id %}",
+      data: {
+        name: $('#id_name').val(),
+        text: $('#id_text').val(),
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+      },
+    })
+  }
 </script>
 <script>
-    $(document).ready(function () {
-        setInterval(SubmitForm, 60000);
-    })
+  $(document).ready(function () {
+    setInterval(SubmitForm, 60000);
+  })
 </script>
 <script>
-    var timeout;
-    $('#id_text').on('keyup', function () {
-        if (timeout) { clearTimeout(timeout); }
-        timeout = setTimeout(SubmitForm, 5000);
-    })
+  var timeout;
+  $('#id_text').on('keyup', function () {
+    if (timeout) { clearTimeout(timeout); }
+    timeout = setTimeout(SubmitForm, 5000);
+  })
 </script>
 
 {% endblock content %}
-
