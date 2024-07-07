@@ -1,7 +1,7 @@
 import datetime
 
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views import generic
@@ -14,14 +14,10 @@ from notes.models import NotesModel
 
 
 class IndexView(generic.UpdateView):
-    template_name = "notes/notes.html"
-    form_class = NotesForm
 
     def get(self, request):
         queryset = NotesModel.objects.order_by("last_modified").last()
-        form = NotesForm(instance=queryset)
-        notes_names = NotesModel.objects.values("id", "name")
-        return render(request, self.template_name, {"form": form, "notes_names": notes_names})
+        return redirect("notes:notes", note_id=queryset.id)
 
 
 class NotesView(generic.UpdateView):
