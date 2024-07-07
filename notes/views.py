@@ -13,14 +13,14 @@ from notes.forms import (
 from notes.models import NotesModel
 
 
-class IndexView(generic.UpdateView):
+class IndexView(generic.View):
 
     def get(self, request):
         queryset = NotesModel.objects.order_by("last_modified").last()
         return redirect("notes:notes", note_id=queryset.id)
 
 
-class NotesView(generic.UpdateView):
+class NotesView(generic.View):
     template_name = "notes/notes.html"
     success_url = reverse_lazy("notes:notes")
     form_class = NotesForm
