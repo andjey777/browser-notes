@@ -14,7 +14,8 @@
     <div class="pagination flex-column">
       {% for name in page_obj %}
       <li class="nav-item">
-        <a href="{% url 'notes:notes' note_id=name.id %}" class="nav-link" aria-current="page">
+        <a href="{% url 'notes:notes' note_id=name.id %}?page={{ page_obj.number }}" class="nav-link"
+          aria-current="page">
           {{ name.name }}
         </a>
       </li>
