@@ -11,18 +11,34 @@
       </a>
     </li>
     <hr>
-    {% for name in notes_names %}
-    <li class="nav-item">
-      <a href="{% url 'notes:notes' note_id=name.id %}" class="nav-link" aria-current="page">
-        {{ name.name }}
-      </a>
-    </li>
-    {% endfor %}
+    <div class="pagination flex-column">
+      {% for name in page_obj %}
+      <li class="nav-item">
+        <a href="{% url 'notes:notes' note_id=name.id %}" class="nav-link" aria-current="page">
+          {{ name.name }}
+        </a>
+      </li>
+      {% endfor %}
+      <div class="px-3" style="text-align: center;">
+      {% if page_obj.has_previous %}
+      <a href="?page=1">First</a>
+      <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}</div>
+    </div>
   </ul>
   <hr>
 </div>
 
-<div class="container" style="max-width: 700px; text-align: center; margin:0 auto;">
+<div class="container" style="max-width: 45%; text-align: center; margin:0 auto;">
   <h1>Note</h1>
   <div class="card">
     <form id="main_form" class="m-3" method="POST">
