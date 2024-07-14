@@ -33,7 +33,7 @@ class NotesView(generic.ListView):
     def get(self, request, note_id):
         queryset = NotesModel.objects.get(id=note_id)
         form = NotesForm(instance=queryset)
-        notes_names = NotesModel.objects.all()
+        notes_names = NotesModel.objects.all().order_by("id")
         paginator = Paginator(notes_names, 5)
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
