@@ -47,14 +47,7 @@
   <div class="card">
     <form id="main_form" class="m-3" method="POST">
       {% csrf_token %}
-      <table class="table table-borderless w">
-        <tr>
-          <td>{{ form.name }}</td>
-        </tr>
-        <tr>
-          <td colspan="3">{{ form.text }}</td>
-        </tr>
-      </table>
+      {{ form.as_p }}
     </form>
   </div>
 
