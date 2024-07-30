@@ -55,3 +55,12 @@ class CreateView(generic.CreateView):
     form_class = CreateForm
     template_name = "notes/create.html"
     success_url = reverse_lazy("notes:index")
+
+
+class ApiNotesView(generic.ListView):
+    model = NotesModel
+
+    def get(self, request, note_id):
+        data = NotesModel.objects.filter(id=note_id).values("name", "text")
+        print(data)
+        return JsonResponse(data, safe=False)

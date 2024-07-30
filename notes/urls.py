@@ -8,4 +8,5 @@ urlpatterns = [
     path("<int:note_id>/", views.NotesView.as_view(), name="notes"),
     path("update/<int:notes_id>/", views.UpdateView.as_view(), name="update"),
     path("create/", views.CreateView.as_view(), name="create"),
+    path("api/note/<int:note_id>/", views.ApiNotesView.as_view(), name="api_note"),
 ]

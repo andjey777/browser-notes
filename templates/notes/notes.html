@@ -47,7 +47,8 @@
   <div class="card">
     <form id="main_form" class="m-3" method="POST">
       {% csrf_token %}
-      {{ form.as_p }}
+      <p>{{ form.name }}</p>
+      <p>{{ form.text }}</p>
     </form>
   </div>
 
@@ -63,6 +64,7 @@
         csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
       },
     })
+    fillForm()
   }
 </script>
 <script>
@@ -77,5 +79,24 @@
     timeout = setTimeout(SubmitForm, 5000);
   })
 </script>
+<script>
+  async function getNote() {
+    var note_id = "{{ form.instance.id }}";
+    const response = await fetch(`http://127.0.0.1:8000/api/note/${note_id}/`);
+    const payload = await response.json();
+    const note = payload.data;
+    return note;
+  }
 
+  async function fillForm() {
+    const note = await getNote();
+    const form = document.getElementById('main-form');
+    form.innerHTML = '';
+    const name = document.getElementById('id_name');
+    const text = document.getElementById('id_text');
+    console.log(note)
+    name.textContent = note.name
+    text.textContent = note.text
+  }
+</script>
 {% endblock content %}
